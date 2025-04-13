@@ -1,0 +1,807 @@
+/* Core imports */
+@import 'antd/dist/reset.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #3b82f6;
+    --gradient-start: #2563eb;
+    --gradient-end: #4f46e5;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --error-color: #dc2626;
+    --background-light: #ffffff;
+    --background-dark: #111827;
+    --text-light: #374151;
+    --text-dark: #f3f4f6;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Global styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    color: var(--text-light);
+    background-color: #f8fafc;
+    line-height: 1.5;
+}
+
+.dark body {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    background-image: 
+        radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 100% 0%, rgba(79, 70, 229, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+}
+
+/* Layout structure */
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.ant-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+}
+
+.ant-layout-header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    padding: 0 48px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.dark .ant-layout-header {
+    background: rgba(17, 24, 39, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Add top padding to main content to prevent overlap */
+.ant-layout-content {
+    padding-top: 96px !important; /* Increased from 72px to 96px for better spacing */
+    min-height: calc(100vh - 72px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ant-layout-footer {
+    text-align: center;
+    padding: 24px;
+    background: transparent;
+    color: #6b7280;
+    font-size: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .ant-layout-footer {
+    color: #9ca3af;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Content area */
+.content-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Search components */
+.search-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Search cards */
+.basic-search-container,
+.advanced-search-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 25px -5px rgba(0, 0, 0, 0.05),
+        0 20px 50px -12px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.basic-search-container::before,
+.advanced-search-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        transparent 100%);
+}
+
+.dark .basic-search-container,
+.dark .advanced-search-card {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.2),
+        0 10px 25px -5px rgba(0, 0, 0, 0.2),
+        0 20px 50px -12px rgba(0, 0, 0, 0.2);
+}
+
+.basic-search-container:hover,
+.advanced-search-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 15px 35px -5px rgba(0, 0, 0, 0.1),
+        0 30px 60px -12px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab navigation */
+.search-tabs {
+    width: 100%;
+    margin: 0 0 24px 0;
+}
+
+.search-tabs .ant-tabs-content {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.search-tabs .ant-tabs-tabpane {
+    width: 100%;
+}
+
+/* Search container wrapper */
+.search-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Space utility override */
+.space-y-6 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Form layout */
+.search-form,
+.advanced-search-form {
+    width: 100%;
+}
+
+.ant-form-item {
+    margin-bottom: 24px;
+}
+
+.ant-form-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Search tips */
+.search-tips {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.dark .search-tips {
+    background: rgba(17, 24, 39, 0.5);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.search-tips:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-tips h4 {
+    margin-bottom: 12px;
+    color: #374151;
+}
+
+.dark .search-tips h4 {
+    color: #e5e7eb;
+}
+
+.search-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-tips li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.search-tips li:last-child {
+    margin-bottom: 0;
+}
+
+.search-tips li::before {
+    content: "→";
+    margin-right: 8px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Search Results Table */
+.search-results-table {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    table-layout: fixed;
+}
+
+.dark .search-results-table {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.search-results-table .ant-table {
+    background: transparent;
+}
+
+.search-results-table .ant-table-container {
+    overflow-x: hidden;
+}
+
+.search-results-table .ant-table-thead > tr > th {
+    background: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    padding: 16px;
+}
+
+.dark .search-results-table .ant-table-thead > tr > th {
+    background: rgba(31, 41, 55, 0.5);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.search-results-table .ant-table-tbody > tr > td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .search-results-table .ant-table-tbody > tr > td {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.search-results-table .ant-table-tbody > tr:hover > td {
+    background: rgba(37, 99, 235, 0.05) !important;
+}
+
+.dark .search-results-table .ant-table-tbody > tr:hover > td {
+    background: rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Table column styles */
+.search-results-table .filename-column,
+.search-results-table .filepath-column {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+}
+
+.search-results-table .filename-column {
+    width: 22%;
+}
+
+.search-results-table .filepath-column {
+    width: 30%;
+}
+
+.search-results-table .size-column {
+    width: 15%;
+}
+
+.search-results-table .date-column {
+    width: 18%;
+}
+
+.search-results-table .actions-column {
+    width: 15%;
+}
+
+.search-results-table .ant-table-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tooltip for truncated text */
+.search-results-table .filename-tooltip,
+.search-results-table .filepath-tooltip {
+    cursor: default;
+}
+
+/* Form elements */
+.ant-input,
+.ant-input-number,
+.ant-picker,
+.ant-select .ant-select-selector {
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.ant-input:hover,
+.ant-input-number:hover,
+.ant-picker:hover,
+.ant-select:hover .ant-select-selector {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+.ant-input:focus,
+.ant-input-number:focus,
+.ant-picker-focused,
+.ant-select-focused .ant-select-selector {
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 0 0 2px rgba(37, 99, 235, 0.1),
+        0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.ant-input-number-input-wrap input {
+    height: 42px;
+}
+
+.ant-picker {
+    width: 100%;
+}
+
+.ant-input-number {
+    width: 120px;
+}
+
+.file-size-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-size-range .ant-input-number {
+    flex: 1;
+    max-width: 120px;
+}
+
+.dark .ant-input,
+.dark .ant-input-number,
+.dark .ant-picker,
+.dark .ant-select .ant-select-selector {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+}
+
+/* Search buttons */
+.search-button,
+.advanced-search-button {
+    width: 100%;
+    max-width: 320px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    border: none;
+    box-shadow: 
+        0 2px 4px rgba(37, 99, 235, 0.1),
+        0 4px 12px rgba(37, 99, 235, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-button::before,
+.advanced-search-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.search-button:hover::before,
+.advanced-search-button:hover::before {
+    left: 100%;
+}
+
+.search-button:hover,
+.advanced-search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 4px 8px rgba(37, 99, 235, 0.2),
+        0 8px 24px rgba(37, 99, 235, 0.2);
+}
+
+.search-button:active,
+.advanced-search-button:active {
+    transform: translateY(1px);
+}
+
+/* Quick search specific styles */
+.basic-search-container .ant-input-search {
+    width: 100%;
+}
+
+.basic-search-container .ant-input-search .ant-input {
+    height: 44px;
+    padding-right: 120px;
+}
+
+.basic-search-container .ant-input-search .ant-input-search-button {
+    width: 120px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+/* Results card */
+.ant-card {
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+.dark .ant-card {
+    background-color: rgba(31, 41, 55, 0.95);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.ant-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dark .ant-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+.fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+.fade-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* Responsive design */
+@media (max-width: 1440px) {
+    .content-container {
+        max-width: 1200px;
+    }
+    
+    .search-container,
+    .search-wrapper {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .content-container {
+        max-width: 1000px;
+    }
+    
+    .search-container,
+    .search-wrapper {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .ant-layout-header {
+        padding: 0 24px;
+    }
+    
+    .content-container {
+        margin: 0 24px;
+        width: calc(100% - 48px);
+    }
+
+    .search-container,
+    .search-wrapper {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .ant-layout-content {
+        padding-top: 80px !important;
+    }
+    
+    .content-container {
+        margin: 0 16px;
+        width: calc(100% - 32px);
+        padding: 16px;
+    }
+    
+    .basic-search-container,
+    .advanced-search-card {
+        padding: 24px;
+        border-radius: 16px;
+    }
+    
+    .ant-form-item {
+        margin-bottom: 16px;
+    }
+
+    .search-button,
+    .advanced-search-button {
+        max-width: 100%;
+    }
+
+    .basic-search-container .ant-input-search .ant-input {
+        padding-right: 88px;
+    }
+
+    .basic-search-container .ant-input-search .ant-input-search-button {
+        width: 88px;
+    }
+
+    .search-tabs .ant-tabs-tab {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .search-button-container {
+        margin-top: 24px;
+    }
+}
+
+/* Copyright footer */
+.copyright-footer {
+    text-align: center;
+    padding: 24px;
+    color: #6b7280;
+    font-size: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.dark .copyright-footer {
+    color: #9ca3af;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(17, 24, 39, 0.5);
+}
+
+/* Tab animation */
+.ant-tabs-content-holder {
+    transition: height 0.3s ease;
+}
+
+.ant-tabs-tabpane {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab styles */
+.ant-tabs-tab {
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 12px 24px !important;
+}
+
+.ant-tabs-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.ant-tabs-tab:hover::after {
+    width: 80%;
+}
+
+.ant-tabs-tab-active::after {
+    width: 100%;
+}
+
+/* Advanced search specific styles */
+.advanced-search-form {
+    max-width: 100%;
+}
+
+.advanced-search-form .ant-form-item-label {
+    padding-bottom: 8px;
+}
+
+.advanced-search-form .ant-form-item-label > label {
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.dark .advanced-search-form .ant-form-item-label > label {
+    color: var(--text-dark);
+}
+
+.advanced-search-form .ant-input-number,
+.advanced-search-form .ant-picker,
+.advanced-search-form .ant-select {
+    width: 100%;
+}
+
+.advanced-search-textarea {
+    border-radius: 12px !important;
+    resize: none;
+    min-height: 120px !important;
+}
+
+.advanced-search-form .ant-switch {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dark .advanced-search-form .ant-switch {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.advanced-search-form .ant-switch-checked {
+    background: var(--primary-color) !important;
+}
+
+.search-button-container {
+    /* margin-top: 40px; */
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.file-size-range {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-size-range .ant-input-number {
+    flex: 1;
+}
+
+.file-size-range span {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.dark .file-size-range span {
+    color: var(--text-dark);
+}
+
+/* Pagination */
+.search-results-table .ant-pagination {
+    margin: 16px 0;
+    padding: 0 16px;
+}
+
+.search-results-table .ant-pagination-total-text {
+    margin-right: 16px;
+} 
